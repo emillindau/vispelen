@@ -48,6 +48,19 @@ for (let i = 1; i < 33; i++) {
   loadImage(i);
 }
 
+function textShadow(precision, size, color) {
+  let value = null;
+  let offset = 0;
+  const length = size * (1 / precision) - 1;
+
+  for (let i = 0; i < length; i++) {
+    offset = offset + precision;
+    const shadow = `${offset}px ${offset}px ${color}`;
+    value = `${value}, ${shadow}`;
+  }
+  return value;
+}
+
 function App() {
   const { timeLeft } = useCountdown(1594339200000);
   const imageNumber = useImage();
