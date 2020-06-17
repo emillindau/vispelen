@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f806fd726c7dd640da916de05ccb9b56",
+    "revision": "ee30cd4699313409fc56d8558042727f",
     "url": "/vispelen/index.html"
   },
   {
-    "revision": "7f028e17849a64197895",
+    "revision": "7ee4aa45c77750374cb1",
     "url": "/vispelen/static/css/main.c23c56e2.chunk.css"
   },
   {
@@ -144,8 +144,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/vispelen/static/js/9.d9079b19.chunk.js"
   },
   {
-    "revision": "7f028e17849a64197895",
-    "url": "/vispelen/static/js/main.b7b77392.chunk.js"
+    "revision": "7ee4aa45c77750374cb1",
+    "url": "/vispelen/static/js/main.a92ebcf1.chunk.js"
   },
   {
     "revision": "531df7e5cfd352870b95",
