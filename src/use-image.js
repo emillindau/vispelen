@@ -1,17 +1,25 @@
 import { useState, useEffect } from "react";
 
-export function useImage() {
-  const NO_OF_IMAGES = 32;
-  const [image, setImage] = useState(1);
+export function useImage(start, stop) {
+  const [image, setImage] = useState(start);
 
   useEffect(() => {
     const handle = setInterval(() => {
-      const number = Math.floor(Math.random() * NO_OF_IMAGES) + 1;
-      setImage(number);
+      setImage((prevNumber) => {
+        if (prevNumber === stop) {
+          return start;
+        }
+        return ++prevNumber;
+      });
     }, 4500);
 
     return () => clearInterval(handle);
-  }, []);
+  }, [start, stop]);
 
-  return `${image}`;
+  const nextImage = image + 1 > stop ? start : image + 1;
+
+  return {
+    image: `${image}`,
+    nextImage: `${nextImage}`,
+  };
 }
