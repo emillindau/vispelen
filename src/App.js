@@ -34,27 +34,26 @@ const Header = styled.header`
   color: #fafafa;
 `;
 
+const IMAGES = [];
+const loadImage = async (imageName) => {
+  try {
+    const img = await import(`./images/${imageName}.png`);
+    IMAGES.push(img.default);
+  } catch (e) {
+    console.log("error", e);
+  }
+};
+
+for (let i = 1; i < 33; i++) {
+  loadImage(i);
+}
+
 function App() {
   const { timeLeft } = useCountdown(1594339200000);
   const imageNumber = useImage();
-  const [imageUrl, setImageurl] = useState();
-
-  useEffect(() => {
-    const loadImage = (imageName) => {
-      import(`./images/${imageName}.png`)
-        .then((image) => {
-          setImageurl(image.default);
-        })
-        .catch(() => {
-          setImageurl(defaultImage);
-        });
-    };
-
-    loadImage(imageNumber);
-  }, [imageNumber]);
 
   return (
-    <Fullscreen url={imageUrl}>
+    <Fullscreen url={IMAGES[imageNumber]}>
       <Header>
         <Title>Vibergsönspelen 2020</Title>
       </Header>
