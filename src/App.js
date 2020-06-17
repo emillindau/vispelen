@@ -33,6 +33,10 @@ const Title = styled.h1`
   text-transform: uppercase;
   font-family: "Archivo Black", "Archivo", sans-serif;
   font-weight: normal;
+  display: block;
+  min-height: 90px;
+  height: auto;
+  text-align: center;
 
   span {
     color: #5362f6;
@@ -68,6 +72,11 @@ const Title = styled.h1`
 
   @media screen and (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 28px;
+    margin: 1rem auto;
   }
 
   @keyframes scatter {
