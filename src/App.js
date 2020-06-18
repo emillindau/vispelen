@@ -174,7 +174,11 @@ function App() {
           <span aria-hidden="true">0</span>
         </Title>
       </Header>
-      <Countdown />
+      <Countdown
+        whenDone={() => {
+          // Handle countdown done
+        }}
+      />
       <HiddenNextImage src={IMAGES[nextImage]} />
     </Fullscreen>
   );

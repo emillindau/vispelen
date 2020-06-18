@@ -21,8 +21,12 @@ const ListItem = styled.li`
   }
 `;
 
-export const Countdown = () => {
+export const Countdown = ({ whenDone }) => {
   const { hours, days, minutes, seconds, done } = useCountdown(1594339200000);
+  if (done) {
+    whenDone();
+  }
+
   return (
     <div className="countdown">
       <ul>
