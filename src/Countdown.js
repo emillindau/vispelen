@@ -2,10 +2,6 @@ import React from "react";
 import { useCountdown } from "./use-countdown";
 import styled from "styled-components";
 
-const Stroke = styled.span`
-  -webkit-text-stroke: 0.2px #000;
-`;
-
 const ListItem = styled.li`
   display: inline-block;
   font-size: 1.5em;
