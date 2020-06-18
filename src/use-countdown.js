@@ -27,24 +27,34 @@ export function useCountdown(timestamp) {
         if (seconds < 10) {
           seconds = `0${seconds}`;
         }
-        return days !== "00"
-          ? `${days} d ${hours} h ${minutes} m ${seconds} s`
-          : `${hours}:${minutes}:${seconds}`;
+        return {
+          days,
+          hours,
+          minutes,
+          seconds,
+          done: false,
+        };
       }
-      return "DONE";
+      return {
+        days: "00",
+        hours: "00",
+        minutes: "00",
+        seconds: "00",
+        done: true,
+      };
     };
 
     const handle = setInterval(() => {
-      const timeLeft = calculateTimeLeft();
-      if (timeLeft === "DONE") {
+      const tl = calculateTimeLeft();
+      if (tl.done) {
         clearInterval(handle);
       }
 
-      setTimeLeft(timeLeft);
+      setTimeLeft(tl);
     }, 1000);
 
     return () => clearInterval(handle);
   }, [timestamp]);
 
-  return { timeLeft };
+  return timeLeft;
 }
