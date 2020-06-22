@@ -1,8 +1,11 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useImage } from "./use-image";
 import { Countdown } from "./Countdown";
+import MyConfetti from "./MyConfetti";
+import { Music } from "./Music";
+import { Info } from "./Info";
 
 const Fullscreen = styled.div`
   width: 100vw;
@@ -16,7 +19,7 @@ const Fullscreen = styled.div`
     -o-background-size: cover;
     background-size: cover;
     transition: background-image 0.3s ease-in-out;
-    opacity: 0.75;
+    opacity: ${(props) => props.opacity};
     top: 0;
     left: 0;
     bottom: 0;
@@ -111,19 +114,6 @@ const HiddenNextImage = styled.img`
 
 const START_IMAGE = 1;
 const END_IMAGE = 32;
-const IMAGES = [];
-const loadImage = async (imageName) => {
-  try {
-    const img = await import(`./images/${imageName}.png`);
-    IMAGES.push(img.default);
-  } catch (e) {
-    console.log("error", e);
-  }
-};
-
-for (let i = START_IMAGE; i <= END_IMAGE; i++) {
-  loadImage(i);
-}
 
 function textShadow(precision, size, color) {
   let value = [];
@@ -150,37 +140,73 @@ TEXT_SHADOWS.push(textShadow(0.25, 6, "#FF5555"));
 
 function App() {
   const { image: imageNumber, nextImage } = useImage(START_IMAGE, END_IMAGE);
+  const [opacity, setOpacity] = useState(1);
+
+  useEffect(() => {
+    let ticking;
+    function scrollHandler(e) {
+      let last_known_scroll_position = window.scrollY;
+
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          // doSomething(last_known_scroll_position);
+          const opacityVal = Math.min(last_known_scroll_position / 300, 1);
+          const finalVal = 1 - opacityVal;
+
+          console.log("targetOp", finalVal);
+          setOpacity(finalVal);
+          ticking = false;
+        });
+
+        ticking = true;
+      }
+    }
+    window.addEventListener("scroll", scrollHandler);
+
+    return () => window.removeEventListener("scroll", scrollHandler);
+  }, []);
+
   return (
-    <Fullscreen url={IMAGES[imageNumber]}>
-      <Header>
-        <Title textShadows={TEXT_SHADOWS}>
-          <span aria-hidden="true">V</span>
-          <span aria-hidden="true">i</span>
-          <span aria-hidden="true">b</span>
-          <span aria-hidden="true">e</span>
-          <span aria-hidden="true">r</span>
-          <span aria-hidden="true">g</span>
-          <span aria-hidden="true">s</span>
-          <span aria-hidden="true">ö</span>
-          <span aria-hidden="true">n</span>
-          <span aria-hidden="true">s</span>
-          <span aria-hidden="true">p</span>
-          <span aria-hidden="true">e</span>
-          <span aria-hidden="true">l</span>
-          <span aria-hidden="true">e</span>
-          <span aria-hidden="true">n</span> <span aria-hidden="true">2</span>
-          <span aria-hidden="true">0</span>
-          <span aria-hidden="true">2</span>
-          <span aria-hidden="true">0</span>
-        </Title>
-      </Header>
-      <Countdown
-        whenDone={() => {
-          // Handle countdown done
-        }}
-      />
-      <HiddenNextImage src={IMAGES[nextImage]} />
-    </Fullscreen>
+    <>
+      <Fullscreen
+        url={`https://res.cloudinary.com/dbso1g3hl/image/upload/v1592854382/vispelen/${imageNumber}.png`}
+        opacity={opacity}
+      >
+        <Header>
+          <Title textShadows={TEXT_SHADOWS}>
+            <span aria-hidden="true">V</span>
+            <span aria-hidden="true">i</span>
+            <span aria-hidden="true">b</span>
+            <span aria-hidden="true">e</span>
+            <span aria-hidden="true">r</span>
+            <span aria-hidden="true">g</span>
+            <span aria-hidden="true">s</span>
+            <span aria-hidden="true">ö</span>
+            <span aria-hidden="true">n</span>
+            <span aria-hidden="true">s</span>
+            <span aria-hidden="true">p</span>
+            <span aria-hidden="true">e</span>
+            <span aria-hidden="true">l</span>
+            <span aria-hidden="true">e</span>
+            <span aria-hidden="true">n</span> <span aria-hidden="true">2</span>
+            <span aria-hidden="true">0</span>
+            <span aria-hidden="true">2</span>
+            <span aria-hidden="true">0</span>
+          </Title>
+        </Header>
+        <Countdown
+          whenDone={() => {
+            // Handle countdown done
+          }}
+        />
+        <MyConfetti />
+        <HiddenNextImage
+          src={`https://res.cloudinary.com/dbso1g3hl/image/upload/v1592854382/vispelen/${nextImage}.png`}
+        />
+        <Info />
+      </Fullscreen>
+      <Music />
+    </>
   );
 }
 
