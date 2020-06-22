@@ -4,11 +4,12 @@ import styled from "styled-components";
 
 const InfoBlock = styled.div`
   background-color: #fff;
-  margin: 1em;
+  margin: 15em auto 10em auto;
   padding: 1em;
   font-family: "Archivo", sans-serif;
   font-size: 16px;
   line-height: 1.15;
+  max-width: 768px;
 `;
 
 export const Info = () => {
