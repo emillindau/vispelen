@@ -6,28 +6,29 @@ import { Countdown } from "./Countdown";
 import MyConfetti from "./MyConfetti";
 import { Music } from "./Music";
 import { Info } from "./Info";
+import { Schedule } from "./Schedule";
+import { Standings } from "./Standings";
 
 const Fullscreen = styled.div`
   width: 100vw;
   height: 100vh;
-
-  div::after {
-    content: "";
-    background: ${(props) => `url(${props.url}) no-repeat center center fixed`};
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    transition: background-image 0.3s ease-in-out;
-    opacity: ${(props) => props.opacity};
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;
-  }
 `;
+// div::after {
+//   content: "";
+//   background: ${(props) => `url(${props.url}) no-repeat center center fixed`};
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   -o-background-size: cover;
+//   background-size: cover;
+//   transition: background-image 0.3s ease-in-out;
+//   opacity: ${(props) => props.opacity};
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   right: 0;
+//   position: absolute;
+//   z-index: -1;
+// }
 
 const Title = styled.h1`
   margin: 0;
@@ -139,39 +140,42 @@ TEXT_SHADOWS.push(textShadow(0.25, 6, "#E485F8"));
 TEXT_SHADOWS.push(textShadow(0.25, 6, "#FF5555"));
 
 function App() {
-  const { image: imageNumber, nextImage } = useImage(START_IMAGE, END_IMAGE);
-  const [opacity, setOpacity] = useState(1);
+  const [countdownDone, setCountdownDone] = useState(false);
+  // const { image: imageNumber, nextImage } = useImage(START_IMAGE, END_IMAGE);
+  // const [opacity, setOpacity] = useState(1);
 
-  useEffect(() => {
-    let ticking;
-    function scrollHandler(e) {
-      let last_known_scroll_position = window.scrollY;
+  // useEffect(() => {
+  //   let ticking;
+  //   function scrollHandler(e) {
+  //     let last_known_scroll_position = window.scrollY;
 
-      if (!ticking) {
-        window.requestAnimationFrame(function () {
-          // doSomething(last_known_scroll_position);
-          const opacityVal = Math.min(last_known_scroll_position / 300, 1);
-          const finalVal = 1 - opacityVal;
+  //     if (!ticking) {
+  //       window.requestAnimationFrame(function () {
+  //         // doSomething(last_known_scroll_position);
+  //         const opacityVal = Math.min(last_known_scroll_position / 300, 1);
+  //         const finalVal = 1 - opacityVal;
 
-          console.log("targetOp", finalVal);
-          setOpacity(finalVal);
-          ticking = false;
-        });
+  //         setOpacity(finalVal);
+  //         ticking = false;
+  //       });
 
-        ticking = true;
-      }
-    }
-    window.addEventListener("scroll", scrollHandler);
+  //       ticking = true;
+  //     }
+  //   }
+  //   window.addEventListener("scroll", scrollHandler);
 
-    return () => window.removeEventListener("scroll", scrollHandler);
-  }, []);
+  //   return () => window.removeEventListener("scroll", scrollHandler);
+  // }, []);
 
+  // url={`https://res.cloudinary.com/dbso1g3hl/image/upload/v1592854382/vispelen/${imageNumber}.png`}
+  // opacity={opacity}
+
+  // <HiddenNextImage
+  //   src={`https://res.cloudinary.com/dbso1g3hl/image/upload/v1592854382/vispelen/${nextImage}.png`}
+  // />;
   return (
     <>
-      <Fullscreen
-        url={`https://res.cloudinary.com/dbso1g3hl/image/upload/v1592854382/vispelen/${imageNumber}.png`}
-        opacity={opacity}
-      >
+      <Fullscreen>
         <Header>
           <Title textShadows={TEXT_SHADOWS}>
             <span aria-hidden="true">V</span>
@@ -194,17 +198,19 @@ function App() {
             <span aria-hidden="true">0</span>
           </Title>
         </Header>
-        <Countdown
-          whenDone={() => {
-            // Handle countdown done
-          }}
-        />
-        <MyConfetti />
-        <HiddenNextImage
-          src={`https://res.cloudinary.com/dbso1g3hl/image/upload/v1592854382/vispelen/${nextImage}.png`}
-        />
+        {!countdownDone && (
+          <Countdown
+            whenDone={() => {
+              // Handle countdown done
+              setCountdownDone(true);
+            }}
+          />
+        )}
+        <Schedule />
+        <Standings />
         <Info />
       </Fullscreen>
+      <MyConfetti />
       <Music />
     </>
   );

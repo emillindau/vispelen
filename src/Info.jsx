@@ -2,9 +2,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const InfoBlock = styled.div`
+export const InfoBlock = styled.div`
   background-color: #fff;
-  margin: 15em auto 10em auto;
+  margin: 5em auto 10em auto;
   padding: 1em;
   font-family: "Archivo", sans-serif;
   font-size: 16px;

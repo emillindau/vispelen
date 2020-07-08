@@ -2,6 +2,13 @@ import React from "react";
 import Confetti from "react-dom-confetti";
 import { useEffect } from "react";
 import { useState } from "react";
+import styled from "styled-components";
+
+const ConfettiWrapper = styled.div`
+  position: absolute;
+  top: ${(props) => props.y};
+  left: ${(props) => props.x};
+`;
 
 export default () => {
   const [pos, setPos] = useState({ x: 0, y: 0, active: false });
@@ -10,7 +17,7 @@ export default () => {
     const handleClick = ({ clientX, clientY }) => {
       setPos({ x: clientX, y: clientY, active: true });
       setTimeout(() => {
-        setPos({ x: 0, y: 0, active: false });
+        setPos((oldPos) => ({ x: oldPos.x, y: oldPos.y, active: false }));
       }, 2000);
     };
     document.addEventListener("click", handleClick, true);
