@@ -2,13 +2,6 @@ import React from "react";
 import Confetti from "react-dom-confetti";
 import { useEffect } from "react";
 import { useState } from "react";
-import styled from "styled-components";
-
-const ConfettiWrapper = styled.div`
-  position: absolute;
-  top: ${(props) => props.y};
-  left: ${(props) => props.x};
-`;
 
 export default () => {
   const [pos, setPos] = useState({ x: 0, y: 0, active: false });

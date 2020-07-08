@@ -1,7 +1,6 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useImage } from "./use-image";
 import { Countdown } from "./Countdown";
 import MyConfetti from "./MyConfetti";
 import { Music } from "./Music";
@@ -109,12 +108,12 @@ const Header = styled.header`
   color: #fafafa;
 `;
 
-const HiddenNextImage = styled.img`
-  display: none;
-`;
+// const HiddenNextImage = styled.img`
+//   display: none;
+// `;
 
-const START_IMAGE = 1;
-const END_IMAGE = 32;
+// const START_IMAGE = 1;
+// const END_IMAGE = 32;
 
 function textShadow(precision, size, color) {
   let value = [];
